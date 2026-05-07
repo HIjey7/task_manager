@@ -1,22 +1,38 @@
 import express from "express";
-import cors from "cors";
 import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
 
-import taskRoutes from "./routes/tasks.js";
+// routes (проверь пути под себя)
 import authRoutes from "./routes/auth.js";
+import taskRoutes from "./routes/tasks.js";
+
+dotenv.config();
 
 const app = express();
 
-app.use(cors());
+// ===== MIDDLEWARE =====
 app.use(express.json());
 
-// API routes
-app.use("/api/tasks", taskRoutes);
+app.use(
+  cors({
+    origin: "*",
+  }),
+);
+
+// ===== ROUTES =====
 app.use("/api/auth", authRoutes);
+app.use("/api/tasks", taskRoutes);
 
-// MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/taskmanager");
+// ===== DB CONNECT =====
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log("Mongo error:", err));
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000 \nMongoDB connected");
+// ===== START SERVER (ВАЖНО ДЛЯ RENDER) =====
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT);
 });
