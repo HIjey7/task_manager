@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-// LOGIN
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
 
@@ -11,10 +10,11 @@ router.post("/login", (req, res) => {
     return res.status(400).json({ message: "Empty fields" });
   }
 
-  // простая авторизация (для курсовой нормально)
-  const token = jwt.sign({ id: username }, "secret123", { expiresIn: "7d" });
+  const token = jwt.sign({ id: username }, "secret123", {
+    expiresIn: "7d",
+  });
 
-  res.json({
+  return res.json({
     token,
     username,
   });

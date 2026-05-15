@@ -12,6 +12,9 @@ export default function Login({ onLogin }) {
         password,
       });
 
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("username", res.data.username);
+
       onLogin(res.data.token, res.data.username);
     } catch (err) {
       console.log(err);
