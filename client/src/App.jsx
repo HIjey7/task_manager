@@ -160,7 +160,6 @@ export default function App() {
             {task?.text}
           </span>
 
-          {/* КНОПКА МЕНЮ */}
           <div className="relative">
             <button
               onClick={(e) => {
@@ -172,7 +171,6 @@ export default function App() {
               ⋮
             </button>
 
-            {/* МЕНЮ */}
             {openMenu === task._id && (
               <div className="absolute right-0 top-8 z-50 bg-slate-800 border border-slate-700 rounded w-48 shadow-xl">
                 <button
@@ -235,11 +233,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white p-4 sm:p-6">
-      {/* HEADER */}
-      <div className="flex flex-col sm:flex-row justify-between gap-3 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold">Управление задачами</h1>
+      <div className="mb-8">
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-wide text-slate-100 text-center mb-6">
+          Управление задачами
+        </h1>
 
-        <div className="flex gap-3 items-center">
+        <div className="flex justify-end items-center gap-3">
           <div className="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center font-bold">
             {username?.[0]?.toUpperCase()}
           </div>
@@ -248,14 +247,13 @@ export default function App() {
 
           <button
             onClick={logout}
-            className="bg-red-600 px-3 py-1 rounded cursor-pointer hover:bg-red-500 transition"
+            className="bg-red-600 px-3 py-1 rounded cursor-pointer hover:bg-red-500 hover:shadow-[0_0_12px_rgba(239,68,68,0.45)] transition"
           >
             Выйти
           </button>
         </div>
       </div>
 
-      {/* INPUT */}
       <div className="flex flex-col sm:flex-row gap-2 mb-4">
         <input
           value={text}
@@ -266,44 +264,42 @@ export default function App() {
 
         <button
           onClick={addTask}
-          className="bg-blue-600 px-5 py-2 rounded w-full sm:w-auto cursor-pointer hover:bg-blue-500 transition"
+          className="bg-blue-600 px-5 py-2 rounded w-full sm:w-auto cursor-pointer hover:bg-blue-500 hover:shadow-[0_0_12px_rgba(59,130,246,0.45)] transition"
         >
           Добавить
         </button>
       </div>
 
-      {/* BULK */}
       <div className="flex flex-wrap gap-2 mb-6">
         <button
           onClick={() => bulkChange("todo")}
-          className="bg-blue-700 px-3 py-1 rounded cursor-pointer"
+          className="bg-blue-700 px-3 py-1 rounded cursor-pointer hover:bg-blue-600 hover:shadow-[0_0_10px_rgba(59,130,246,0.35)] transition"
         >
           К выполнению
         </button>
 
         <button
           onClick={() => bulkChange("progress")}
-          className="bg-yellow-700 px-3 py-1 rounded cursor-pointer"
+          className="bg-yellow-700 px-3 py-1 rounded cursor-pointer hover:bg-yellow-600 hover:shadow-[0_0_10px_rgba(234,179,8,0.35)] transition"
         >
           В работе
         </button>
 
         <button
           onClick={() => bulkChange("done")}
-          className="bg-green-700 px-3 py-1 rounded cursor-pointer"
+          className="bg-green-700 px-3 py-1 rounded cursor-pointer hover:bg-green-600 hover:shadow-[0_0_10px_rgba(34,197,94,0.35)] transition"
         >
           Готово
         </button>
 
         <button
           onClick={bulkDelete}
-          className="bg-red-700 px-3 py-1 rounded cursor-pointer"
+          className="bg-red-700 px-3 py-1 rounded cursor-pointer hover:bg-red-600 hover:shadow-[0_0_10px_rgba(239,68,68,0.35)] transition"
         >
           Удалить выбранные
         </button>
       </div>
 
-      {/* COLUMNS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {Object.entries(grouped).map(([key, list]) => (
           <div key={key} className="bg-slate-900/50 p-3 rounded-lg">
@@ -321,7 +317,6 @@ export default function App() {
         ))}
       </div>
 
-      {/* EDIT MODAL */}
       {editTask && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center">
           <div className="bg-slate-900 p-4 rounded w-80">
@@ -336,14 +331,14 @@ export default function App() {
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setEditTask(null)}
-                className="px-3 py-1 bg-gray-600 rounded cursor-pointer"
+                className="px-3 py-1 bg-gray-600 rounded cursor-pointer hover:bg-gray-500 transition"
               >
                 Отмена
               </button>
 
               <button
                 onClick={saveEdit}
-                className="px-3 py-1 bg-green-600 rounded cursor-pointer"
+                className="px-3 py-1 bg-green-600 rounded cursor-pointer hover:bg-green-500 hover:shadow-[0_0_10px_rgba(34,197,94,0.35)] transition"
               >
                 Сохранить
               </button>
