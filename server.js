@@ -11,27 +11,29 @@ import taskRoutes from "./routes/tasks.js";
 dotenv.config();
 
 const app = express();
+
 app.use(express.json());
-app.use(cors({ origin: "*" }));
+app.use(cors());
 
 // ===== API =====
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 
-// ===== MONGO =====
+// ===== DB =====
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
-// ===== FRONTEND =====
+// ===== PATH =====
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, "dist")));
+// ===== FRONTEND =====
+app.use(express.static(path.join(__dirname, "client/dist")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "client/dist/index.html"));
 });
 
 // ===== START =====
