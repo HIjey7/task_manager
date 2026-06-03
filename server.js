@@ -11,24 +11,24 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-
 app.use(
   cors({
     origin: "*",
   }),
 );
 
-// 🔥 ВАЖНО: ЕДИНЫЙ API ПРЕФИКС
-app.use("/api/auth", authRoutes);
-app.use("/api/tasks", taskRoutes);
+const PORT = process.env.PORT || 3000;
 
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log("Mongo error:", err));
+  .then(() => {
+    console.log("MongoDB connected");
 
-const PORT = process.env.PORT || 3000;
+    app.use("/api/auth", authRoutes);
+    app.use("/api/tasks", taskRoutes);
 
-app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
-});
+    app.listen(PORT, () => {
+      console.log("Server running on", PORT);
+    });
+  })
+  .catch((err) => console.log(err));

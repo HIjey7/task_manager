@@ -12,6 +12,8 @@ router.get("/", auth, async (req, res) => {
 
 // CREATE
 router.post("/", auth, async (req, res) => {
+  console.log("CREATE TASK HIT");
+
   const task = new Task({
     text: req.body.text,
     userId: req.userId,
@@ -19,6 +21,9 @@ router.post("/", auth, async (req, res) => {
   });
 
   const saved = await task.save();
+
+  console.log("SAVED IN DB:", saved);
+
   res.json(saved);
 });
 
@@ -44,7 +49,6 @@ router.post("/bulk-delete", auth, async (req, res) => {
   res.json({ ok: true });
 });
 
-// CHANGE STATUS
 router.patch("/:id/status", auth, async (req, res) => {
   const { status } = req.body;
 
@@ -74,7 +78,6 @@ router.patch("/bulk-status", auth, async (req, res) => {
   res.json(updated);
 });
 
-// ⭐ FIX: EDIT TEXT (ВОТ ЧТО У ТЕБЯ НЕ РАБОТАЛО)
 router.patch("/:id/text", auth, async (req, res) => {
   const { text } = req.body;
 

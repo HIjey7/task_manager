@@ -1,19 +1,25 @@
 import { useState } from "react";
-import api from "./api";
+import axios from "axios";
 
 export default function Register({ onLogin }) {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handle = async () => {
-    const res = await axios.post("http://localhost:3000/api/auth/register", {
-      email,
-      password,
-    });
+    try {
+      const res = await axios.post("http://localhost:3000/api/auth/register", {
+        username,
+        password,
+      });
 
-    const token = res.data.token;
-    localStorage.setItem("token", token);
-    onLogin(token);
+      const token = res.data.token;
+
+      localStorage.setItem("token", token);
+
+      onLogin(token);
+    } catch (err) {
+      console.log("REGISTER ERROR:", err.response?.data || err.message);
+    }
   };
 
   return (
@@ -23,14 +29,16 @@ export default function Register({ onLogin }) {
 
         <input
           className="w-full p-2 bg-slate-800 rounded"
-          placeholder="email"
-          onChange={(e) => setEmail(e.target.value)}
+          placeholder="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
 
         <input
           className="w-full p-2 bg-slate-800 rounded"
           placeholder="password"
           type="password"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
