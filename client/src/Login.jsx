@@ -30,13 +30,11 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="flex items-center justify-center h-screen relative overflow-hidden">
-      {/* background (blur НЕ анимируем вообще) */}
       <div className="absolute inset-0 bg-slate-950">
         <div className="absolute inset-0 bg-indigo-500/20 blur-3xl" />
         <div className="absolute inset-0 bg-blue-500/10 blur-2xl" />
       </div>
 
-      {/* card */}
       <div className="relative w-80 p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl animate-loginIn">
         <h2 className="text-white mb-6 text-xl text-center font-semibold">
           Вход
@@ -44,7 +42,7 @@ export default function Login({ onLogin }) {
 
         <input
           className="w-full mb-3 p-2 rounded bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:outline-none focus:border-indigo-400"
-          placeholder="Username"
+          placeholder="Имя пользователя"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -52,7 +50,7 @@ export default function Login({ onLogin }) {
 
         <input
           className="w-full mb-4 p-2 rounded bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:outline-none focus:border-indigo-400"
-          placeholder="Password"
+          placeholder="Пароль"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
