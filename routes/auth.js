@@ -29,21 +29,34 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", (req, res) => {
-  const { username, password } = req.body;
+router.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
 
-  if (!username || !password) {
-    return res.status(400).json({ message: "Empty fields" });
+    if (!username || !password) {
+      return res.status(400).json({ message: "Empty fields" });
+    }
+
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    if (user.password !== password) {
+      return res.status(400).json({ message: "Wrong password" });
+    }
+
+    const token = jwt.sign({ id: user._id }, "secret123", { expiresIn: "7d" });
+
+    return res.json({
+      token,
+      username: user.username,
+    });
+  } catch (e) {
+    console.log("ERROR:", e);
+    res.status(500).json({ error: e.message });
   }
-
-  const token = jwt.sign({ id: username }, "secret123", {
-    expiresIn: "7d",
-  });
-
-  return res.json({
-    token,
-    username,
-  });
 });
 
 export default router;
